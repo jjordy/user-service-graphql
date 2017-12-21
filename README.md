@@ -1,3 +1,15 @@
+# Environment Variables
+```
+PORT=4000 - required
+NODE_ENV=development - required
+DEBUG=user-service:* 
+DATABASE_URL=postgres://127.0.0.1:5432/postgres - required
+LOG_LOCATION=C:\ - required
+LOG_NAME=testlogs.log 
+JWT_SECRET=devSecret - required
+GRAPHIQL=true
+```
+
 # Docker Commands
 
 To Create Docker volume

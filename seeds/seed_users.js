@@ -21,16 +21,16 @@ const createUsers = () => {
   const users = [
     {
       email: 'jordanrileyaddison@gmail.com',
-      password: '$tudenT1',
-      confirmPassword: '$tudenT1',
+      password: 'test',
+      confirmPassword: 'test',
       firstName: 'Jordan',
       lastName: 'Addison',
       phoneNumber: '2285470060'
     },
     {
       email: 'jordanaddison@globalfas.com',
-      password: '$tudenT1',
-      confirmPassword: '$tudenT1',
+      password: 'test',
+      confirmPassword: 'test',
       firstName: 'Jordan',
       lastName: 'Addison',
       phoneNumber: '2285470060'
