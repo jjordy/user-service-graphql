@@ -41,7 +41,7 @@ async function createCursor (items = []) {
     const after = Buffer.from(cursor).toString('base64')
     return { after }
   } catch (err) {
-    return err
+    return { after: 'MzA=' }
   }
 }
 

@@ -14,9 +14,11 @@ type userRes {
 }
 
 type Query {
-  claims(userId: String): [Claim]
+  claims: [Claim]
+  claimsByUserId(userId: String): [Claim]
   cursors: cursors
-  users(userId: String first: Int after: String): userRes
+  users(userId: String, first: Int, after: String): userRes
+  userByEmail(email: String): User
   user(userId: String!): User
 
 }

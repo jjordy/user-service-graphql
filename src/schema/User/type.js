@@ -4,8 +4,8 @@ const cursors = require('../Cursor/type')
 const User = `
   type User {
     id: String!
-    firstName: String
-    lastName: String
+    firstName: String!
+    lastName: String!
     cursors: cursors!
     email: String!
     claims: [Claim]
@@ -29,6 +29,17 @@ const User = `
   input LoginUserInput {
     email: String!
     password: String!
+  }
+
+  input ForgotPasswordInput {
+    email: String!
+  }
+
+  input ResetPasswordInput {
+    id: String!
+    password: String!
+    confirmPassword: String!
+    token: String!
   }
 `
 

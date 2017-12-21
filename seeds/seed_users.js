@@ -4,18 +4,30 @@ const Claims = require('../src/schema/Claims')
 const faker = require('faker')
 const uuid = require('uuid')
 
-const defaultClaims = [
-  {
-    ClaimType: 'access',
-    ClaimValue: 'CAN_VIEW_PROFILE',
-    id: uuid.v4()
-  },
-  {
-    ClaimType: 'access',
-    ClaimValue: 'CAN_EDIT_PROFILE',
-    id: uuid.v4()
-  }
-]
+const canViewClaim = {
+  ClaimType: 'access',
+  ClaimValue: 'CAN_VIEW_PROFILE'
+}
+
+const canEditClaim = {
+  ClaimType: 'access',
+  ClaimValue: 'CAN_EDIT_PROFILE'
+}
+
+const getUsers = {
+  ClaimType: 'access',
+  ClaimValue: 'GET_ALL_USERS'
+}
+
+const editUsers = {
+  ClaimType: 'access',
+  ClaimValue: 'EDIT_ALL_USERS'
+}
+
+const deleteUsers = {
+  ClaimType: 'access',
+  ClaimValue: 'DELETE_ALL_USERS'
+}
 
 const createUsers = () => {
   const users = [
@@ -54,18 +66,24 @@ const createUsers = () => {
 }
 
 exports.seed = async db => {
-  const claims = new Claims({db, user: {}})
-  const existingUsers = await db('users').returning('id')
-  if (existingUsers.length === 0) {
+  if (process.env.NODE_ENV === 'development') {
+    const claims = new Claims({ db, user: {} })
     try {
       await db('users').del()
+      await db('claims').del()
       const promises = []
-      createUsers().forEach(user =>
+      const newClaims = []
+      createUsers().forEach(user => {
         promises.push(createUser(db, user))
-      )
+      })
       const users = await Promise.all(promises)
-      const ids = users.map(user => user.id)
-      const newClaims = ids.map(id => ({UserId: id, ...defaultClaims}))
+      users.forEach(user => {
+        newClaims.push(Object.assign({}, { UserId: user.id, ...canViewClaim, id: uuid.v4() }))
+        newClaims.push(Object.assign({}, { UserId: user.id, ...canEditClaim, id: uuid.v4() }))
+        newClaims.push(Object.assign({}, { UserId: user.id, ...getUsers, id: uuid.v4() }))
+        newClaims.push(Object.assign({}, { UserId: user.id, ...editUsers, id: uuid.v4() }))
+        newClaims.push(Object.assign({}, { UserId: user.id, ...deleteUsers, id: uuid.v4() }))
+      })
       await claims.createClaims(newClaims)
     } catch (err) {
       debug(err)

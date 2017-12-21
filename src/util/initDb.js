@@ -23,14 +23,14 @@ const runMigrations = async db => {
 const initDb = async (db) => {
   try {
     // check the connection
+    debug('Testing Database Connection')
     await db.raw('select 1+1 as result')
-    // run migrations & seed
+    debug('Database Connection Successful')
+    // run migrations
     await runMigrations(db)
-    await db.seed.run({
-      directory: path.join(__dirname, '..', '..', 'seeds')
-    })
   } catch (err) {
-    throw Error(err)
+    debug(err)
+    throw new Error(err)
   }
 }
 
